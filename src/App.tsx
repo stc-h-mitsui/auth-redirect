@@ -13,6 +13,12 @@ function App() {
 		}
 		return null
 	}
+	const redirectIfLoggedIn = async () => {
+		if (isLogin) {
+			throw redirect("/dashboard")
+		}
+		return null
+	}
 
 	const router = createBrowserRouter([
 		{
@@ -22,9 +28,8 @@ function App() {
 		},
 		{
 			path: "/login",
-			element: (
-				<Login isLogin={isLogin} setIsLogin={setIsLogin} />
-			),
+			loader: redirectIfLoggedIn,
+			element: <Login isLogin={isLogin} setIsLogin={setIsLogin} />,
 		},
 		{
 			path: "/sample",
